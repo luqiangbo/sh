@@ -685,12 +685,11 @@ EOF
             # trojan
             cat > ${NGINX_CONF_PATH}${DOMAIN}.conf<<-EOF
 
-
 server {
     listen 80;
     listen [::]:80;
     server_name ${DOMAIN};
-    root /usr/share/nginx/html;
+    return 301 https://\$server_name:${PORT}\$request_uri;
 }
 
 server {
