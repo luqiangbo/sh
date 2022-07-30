@@ -709,9 +709,10 @@ server {
     ssl_certificate $CERT_FILE;
     ssl_certificate_key $KEY_FILE;
 
-    root /usr/share/nginx/html;
     location / {
-        $action
+        root /usr/share/nginx/html;
+        index  index.html
+
     }
     $ROBOT_CONFIG
 }
