@@ -684,6 +684,15 @@ EOF
             # VLESS+TCP+XTLS
             # trojan
             cat > ${NGINX_CONF_PATH}${DOMAIN}.conf<<-EOF
+
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ${DOMAIN};
+    root /usr/share/nginx/html;
+}
+
 server {
     listen       ${PORT} ssl http2;
     listen       [::]:${PORT} ssl http2;
@@ -700,7 +709,7 @@ server {
     ssl_session_tickets off;
     ssl_certificate $CERT_FILE;
     ssl_certificate_key $KEY_FILE;
-    
+
     root /usr/share/nginx/html;
     location / {
         $action
