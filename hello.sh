@@ -685,10 +685,22 @@ EOF
             # trojan
             cat > ${NGINX_CONF_PATH}${DOMAIN}.conf<<-EOF
 server {
-    listen 80;
-    listen [::]:80;
-    listen 81 http2;
+    listen       ${PORT} ssl http2;
+    listen       [::]:${PORT} ssl http2;
     server_name ${DOMAIN};
+    charset utf-8;
+
+    # ssl配置
+    ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+    ssl_ecdh_curve secp384r1;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+    ssl_session_tickets off;
+    ssl_certificate $CERT_FILE;
+    ssl_certificate_key $KEY_FILE;
+    
     root /usr/share/nginx/html;
     location / {
         $action
